@@ -1,0 +1,11 @@
+-create the backend folder
+-create the client folder 
+-create react-native client
+
+-create DynamoDB database
+    -create project on mobile hub
+    -init awsmobile 
+    
+-create AppSync API
+    -create a data source - dynamo table
+-install client packages
