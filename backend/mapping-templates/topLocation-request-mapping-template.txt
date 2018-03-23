@@ -1,0 +1,18 @@
+{
+    "version":"2017-02-28",
+    "operation":"GET",
+    "path":"/user/location/_search",
+    "params":{
+        "body":{
+            "from":0,
+            "size":1,
+            "query" : {
+                "bool" : {
+                    "must" : [
+                        {"match" : { "handle" : #if($context.source.handle) "$context.source.handle" #else "${context.identity.username}" #end }}
+                    ]
+                }
+            },
+        }
+    }
+}

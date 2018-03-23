@@ -1,0 +1,22 @@
+{
+    "version":"2017-02-28",
+    "operation":"GET",
+    "path":"/user/rides/_search",
+    "params":{
+        "body":{
+            "from":0,
+            "size":50,
+            "query" : {
+                "bool" : {
+                    "must" : [
+                        {"match" : 
+                            { "ride_offer" : "$context.arguments.keyword" },
+                            { "destination" : "$context.arguments.keyword" },
+                            { "beginning" : "$context.arguments.keyword" },
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

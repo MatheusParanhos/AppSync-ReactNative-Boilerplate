@@ -1,0 +1,21 @@
+{
+  #set($hitcount = $context.result.hits.total)
+    #set($locationList = [])
+  #if($hitcount > 0)
+        #foreach($entry in $context.result.hits.hits)
+          #set( $element =
+          ${locationList.add(
+          { "location" : "$entry.get('_source')['location']",
+          	"type" : "$entry.get('_source')['type']",
+            "description": $entry.get('_source')['description'],
+            "favorited": $entry.get('_source')['favorited'],
+            "price": $entry.get('_source')['price'],
+            "how_to": $entry.get('_source')['how_to'],
+            "location_id": "$entry.get('_id')",
+          }
+          )}
+          )
+      #end
+      "items" : $util.toJson($locationList)
+   #end
+}

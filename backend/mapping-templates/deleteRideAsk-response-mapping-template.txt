@@ -1,0 +1,8 @@
+$util.toJson({
+   "ride_asking" : '',
+   "favorited" : '',
+   "beginning" : '',
+   "destination" : '',
+   "ride_asking_id" : '',
+   "created_at" : ''
+})

@@ -1,0 +1,8 @@
+{
+     "ride_ask" : $util.toJson("$context.result.get('_source')['ride_ask']"),
+   "beginning" : $util.toJson("$context.result.get('_source')['beginning']"),
+   "destination" : $util.toJson("$context.result.get('_source')['destination']"),
+   "favorited" : $util.toJson("$context.result.get('_source')['favorited']"),
+   "created_at" : $util.toJson("$context.result.get('_source')['created_at']"),
+   "ride_offer_id" : $util.toJson("$context.result.get('_id')")
+}

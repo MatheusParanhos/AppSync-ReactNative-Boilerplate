@@ -7,5 +7,58 @@
     -init awsmobile 
     
 -create AppSync API
-    -create a data source - dynamo table
+    -create a data source - dynamo table - user pools ok
+    -create serverless.yml
+    -install packages
+    -attach Schema  - 
+    -attach data source
+    -create resolvers
+    -attach resolvers
 -install client packages
+
+The app will fetch data from the database
+such as attractions, restaurants and pubs. 
+The user can request a ride and give a ride as well 
+
+
+a user consists of 
+-name
+-location
+-description
+-followers
+-following
+-friends
+-favorited locations
+
+a ride-asking consists of 
+-beginning
+-destination
+-ride_ask
+-ride_ask_id
+-favorited
+-created_at
+
+-offering_users
+-username
+
+a ride-offering consists of 
+-beginning 
+-destination
+-ride_offer_id
+-ride_offer
+-favorited
+-created_at
+
+-username
+-asking_users
+
+a location consists of
+-type(natural, gastronomic, hotels)
+-name
+-description
+-price
+-how-to-go
+-tips
+-location_id
+-favorited
+-favorite_count

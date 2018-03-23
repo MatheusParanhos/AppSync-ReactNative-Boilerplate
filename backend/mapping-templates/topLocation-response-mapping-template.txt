@@ -1,0 +1,8 @@
+{
+  #set($hitcount = $context.result.hits.total)
+  #if($hitcount > 0)
+      "location" : $util.toJson("$context.result.hits.hits[0].get('_source')['location']"),
+      "favorited" : $util.toJson("$context.result.hits.hits[0].get('_source')['favorited']"),
+      "location_id" : $util.toJson("$context.result.hits.hits[0].get('_id')")
+   #end
+}

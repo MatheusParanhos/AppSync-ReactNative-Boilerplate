@@ -1,0 +1,14 @@
+{
+    "version":"2017-02-28",
+    "operation":"POST",
+    "path":"/user/rides/$context.arguments.ride_offer_id/_update",
+    "params":{
+        "body":{
+        "doc": {
+            "ride_offer": "$context.arguments.ride_offer"
+            "begginning": "$context.arguments.beginning"
+            "destination": "$context.arguments.destination"
+          }
+        }
+    }
+}

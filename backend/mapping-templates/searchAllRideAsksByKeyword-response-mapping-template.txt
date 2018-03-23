@@ -1,0 +1,19 @@
+{
+  #set($hitcount = $context.result.hits.total)
+    #set($rideList = [])
+  #if($hitcount > 0)
+        #foreach($entry in $context.result.hits.hits)
+          #set( $element =
+          ${rideList.add(
+          { "ride_ask" : "$entry.get('_source')['ride_ask']",
+            "beggining": $entry.get('_source')['beggining'],
+            "destination": $entry.get('_source')['destination'],
+            "favorited": $entry.get('_source')['favorited'],
+            "ride_ask_id": "$entry.get('_id')"
+          }
+          )}
+          )
+      #end
+      "items" : $util.toJson($rideList)
+   #end
+}

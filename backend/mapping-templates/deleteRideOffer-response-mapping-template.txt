@@ -1,0 +1,8 @@
+$util.toJson({
+   "ride_offer" : '',
+   "favorited" : '',
+    "beginning" : '',
+   "destination" : '',
+   "ride_offer_id" : '',
+   "created_at" : ''
+})

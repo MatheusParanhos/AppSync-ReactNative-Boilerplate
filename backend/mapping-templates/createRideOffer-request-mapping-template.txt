@@ -1,0 +1,14 @@
+{
+    "version":"2017-02-28",
+    "operation":"PUT",
+    "path":"/user/rides/$util.autoId()",
+    "params":{
+        "body":{
+            "handle":"$context.identity.username",
+            "beginning": "$context.arguments.beginning",
+            "destination": "$context.arguments.destination",
+            "favorited": false,
+            "created_at": "$util.time.nowISO8601()"
+        }
+    }
+}

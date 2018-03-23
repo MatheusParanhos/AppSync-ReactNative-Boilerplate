@@ -1,0 +1,142 @@
+type Mutation {
+	# Create a ride_ask for a user
+	# consumer keys and tokens are not required for dynamo integration
+	createRideAsk(
+		ride_ask: String!,
+		consumer_key: String,
+		consumer_secret: String,
+		access_token_key: String,
+		access_token_secret: String
+	): RideAsk!
+
+    # Create a ride_Offer for a user
+	# consumer keys and tokens are not required for dynamo integration
+	createRideOffer(
+		ride_offer: String!,
+		consumer_key: String,
+		consumer_secret: String,
+		access_token_key: String,
+		access_token_secret: String
+	): RideOffer!
+
+	# Delete User RideAsk
+	deleteRideAsk(
+	    rideAsk_id: String!,
+	    consumer_key: String,
+        consumer_secret: String,
+        access_token_key: String,
+        access_token_secret: String
+    ): RideAsk!
+
+    # Delete User RideOffer
+	deleteRideOffer(
+	    rideOffer_id: String!,
+	    consumer_key: String,
+        consumer_secret: String,
+        access_token_key: String,
+        access_token_secret: String
+    ): RideOffer!
+
+
+	# Update existing RideOffer
+	updateRideOffer(rideOffer_id: String!, ride_offer: String!): RideOffer!
+
+    # Update existing RideAsk
+	updateRideAsk(rideAsk_id: String!, ride_ask: String!): RideAsk!
+
+    # Create user info is available in dynamo integration
+	updateUserInfo(
+		location: String!,
+		description: String!,
+		name: String!,
+		followers_count: Int!,
+		friends_count: Int!,
+		favourites_count: Int!,
+		following: [String!]!
+	): User!
+}
+
+type Query {
+	meInfo(consumer_key: String, consumer_secret: String): User!
+	getUserInfo(handle: String!, consumer_key: String, consumer_secret: String): User!
+
+	# search functionality is available in elasticsearch integration
+	searchAllRideAsksByKeyword(keyword: String!): RideAskConnection
+    searchAllRideOffersByKeyword(keyword: String!): RideOfferConnection
+    searchAllLocationsAsksByKeyword(keyword: String!): LocationConnection
+}
+
+type Subscription {
+	addRideOffer: RideOffer
+		@aws_subscribe(mutations: ["createRideOffer"])
+    addRideAsk: RideAsk    
+        @aws_subscribe(mutations: ["createRideAsk"])
+}
+
+type Location {
+	location_id: String!
+	location: String!
+	favorited: Boolean
+	created_at: String!
+    type: String
+    description: String
+    price: Int
+    how_to_go: String
+    tips: String
+}
+type RideAsk {
+	rideAsk_id: String!
+	ride_ask: String!
+	favorited: Boolean
+	created_at: String!
+    beginning: String!
+    destination: String!
+}
+type RideOffer {
+	rideOffer_id: String!
+	ride_offer: String!
+	favorited: Boolean
+	created_at: String!
+    beginning: String!
+    destination: String!
+}
+
+type RideAskConnection {
+	items: [RideAsk!]!
+	nextToken: String
+}
+
+type RideOfferConnection {
+	items: [RideOffer!]!
+	nextToken: String
+}
+type LocationConnection {
+	items: [Location!]!
+	nextToken: String
+}
+
+type User {
+	name: String!
+	handle: String!
+	location: String!
+	description: String!
+	followers_count: Int!
+	friends_count: Int!
+	favourites_count: Int!
+	following: [String!]!
+	topTweet: Tweet
+	ride_ask(limit: Int!, nextToken: String): RideAskConnection
+    ride_offer(limit: Int!, nextToken: String): RideOfferConnection
+    location(limit: Int!, nextToken: String): LocationConnection
+
+	# search functionality is available in elasticsearch integration
+    searchAllRideAsksByKeyword(keyword: String!): RideAskConnection
+    searchAllRideOffersByKeyword(keyword: String!): RideOfferConnection
+    searchAllLocationsAsksByKeyword(keyword: String!): LocationConnection
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
