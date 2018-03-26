@@ -82,8 +82,9 @@ a location consists of
           "column": 3
         }
       ],
-      "message": "Unable to assume role arn:aws:iam::321318863862:role/ElasticSearch-AppSyncServiceRole."
+      "message": "Unable to assume role arn:aws:iam::{hidden}:role/ElasticSearch-AppSyncServiceRole."
     }
   ]
 }
 
+-next step: add authentication, modify user pool to accept aws-amplify
