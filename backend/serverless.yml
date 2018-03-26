@@ -15,7 +15,7 @@ plugins:
   - serverless-appsync-plugin
 
 custom:
-  accountId: 321318863862  # replace this with your accountId
+  accountId:  # replace this with your accountId
   dynamodb:
     start:
       port: 8000
