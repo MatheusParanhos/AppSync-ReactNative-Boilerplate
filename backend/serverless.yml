@@ -7,12 +7,12 @@ provider:
   runtime: nodejs6.10
   stage: dev
   region: us-west-2
+  role: arn:aws:iam::aws:policy/AdministratorAccess
 
 plugins:
   - serverless-dynamodb-local
   - serverless-offline
   - serverless-appsync-plugin
-  - serverless-webpack
 
 custom:
   accountId: 321318863862  # replace this with your accountId
@@ -25,6 +25,7 @@ custom:
     seed:
       test:
         sources:
+
           - table: Users
             sources: [seed-data/Users.json]
   webpackIncludeModules: true
@@ -64,29 +65,28 @@ custom:
       #rides 
       #mutations
 
-      #mutation that creates a ride-offering (tweet) indexed by elasticSearch  - DONE
+
       - dataSource: myElasticSearch
         type: Mutation
-        field: createRideOffering
-        request: "createRideOffering-request-mapping-template.txt"
-        response: "createRideOffering-response-mapping-template.txt"
+        field: createRideOffer
+        request: "createRideOffer-request-mapping-template.txt"
+        response: "createRideOffer-response-mapping-template.txt"
 
-      #mutation that creates a ride-ask (tweet) indexed by elasticSearch     -               DONE
       - dataSource: myElasticSearch
         type: Mutation
-        field: createRideAsking
-        request: "createRideAsking-request-mapping-template.txt"
-        response: "createRideAsking-response-mapping-template.txt"
+        field: createRideAsk
+        request: "createRideAsk-request-mapping-template.txt"
+        response: "createRideAsk-response-mapping-template.txt"
 
 
-      #mutation that deletes a ride-offer (tweet) on elasticSearch    -                    DONE
+
       - dataSource: myElasticSearch
         type: Mutation
         field: deleteRideOffer
         request: "deleteRideOffer-request-mapping-template.txt"
         response: "deleteRideOffer-response-mapping-template.txt"
       
-      #mutation that deletes a ride-ask(tweet) on elasticSearch    -                       DONE
+
       - dataSource: myElasticSearch
         type: Mutation
         field: deleteRideAsk
@@ -94,14 +94,14 @@ custom:
         response: "deleteRideAsk-response-mapping-template.txt"
 
       
-      #mutation to update a ride-offer (tweet)    -                                       DONE
+
       - dataSource: myElasticSearch
         type: Mutation
         field: updateRideOffer
         request: "updateRideOffer-request-mapping-template.txt"
         response: "updateRideOffer-response-mapping-template.txt"
 
-      #mutation to update a ride-ask (tweet) -                                           DONE
+
       - dataSource: myElasticSearch
         type: Mutation
         field: updateRideAsk
@@ -109,14 +109,14 @@ custom:
         response: "updateRideAsk-response-mapping-template.txt"
 
       #rides queries
-      #query on all rides-offers that search a ride-offer by keyword      -                DONE
+
       - dataSource: myElasticSearch
         type: Query
         field: searchAllRideOffersByKeyword
         request: "searchAllRideOffersByKeyword-request-mapping-template.txt"
         response: "searchAllRideOffersByKeyword-response-mapping-template.txt"
 
-      #query on all rides-asks that search a ride-ask by keyword      -                    DONE
+
       - dataSource: myElasticSearch
         type: Query
         field: searchAllRideAsksByKeyword
@@ -124,12 +124,6 @@ custom:
         response: "searchAllRideAsksByKeyword-response-mapping-template.txt"
       
       #locations
-      #query from elastic search that returns user top locations - top tweets -              DONE
-      - dataSource: myElasticSearch
-        type: User
-        field: topLocations
-        request: "topLocation-request-mapping-template.txt"
-        response: "topLocation-response-mapping-template.txt"
 
       #query from elastic search that return user's favorite locations                      DONE
       - dataSource: myElasticSearch
@@ -138,19 +132,6 @@ custom:
         request: "locations-request-mapping-template.txt"
         response: "locations-response-mapping-template.txt"
 
-      #query on all locations that search a location by keyword                           DONE
-      - dataSource: myElasticSearch
-        type: Query
-        field: searchAllTweetsByKeyword
-        request: "searchAllTweetsByKeyword-request-mapping-template.txt"
-        response: "searchAllTweetsByKeyword-response-mapping-template.txt"
-
-      #lambda that favorites a location (tweet)                                           DONE
-      - dataSource: myLambda
-        type: User
-        field: favourites_count
-        request: "getFavourites-request-mapping-template.txt"
-        response: "getFavourites-response-mapping-template.txt"
 
     schema: # defaults schema.graphql
     serviceRole: "AppSyncServiceRole"
@@ -159,21 +140,21 @@ custom:
         name: myDynamoDB
         description: 'Users table'
         config:
-          tableName: 'ESUsers'
+          tableName: 'BoilerUsers'
           serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/Dynamo-${self:custom.appSync.serviceRole}"
       - type: AMAZON_ELASTICSEARCH
         name: myElasticSearch
         description: 'ElasticSearch'
         config:
-          endpoint: https://search-xxxxxx-xxxxxxxxxxxxxxx.us-east-1.es.amazonaws.com # required # "https://{DOMAIN}.{REGION}.es.amazonaws.com"
+          endpoint: https://myboilerelasticsearch.us-west-2.es.amazonaws.com # required # "https://{DOMAIN}.{REGION}.es.amazonaws.com"
           serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/ElasticSearch-${self:custom.appSync.serviceRole}"
       - type: AWS_LAMBDA
         name: myLambda
         description: 'Lambda DataSource'
         config:
-          lambdaFunctionArn: "arn:aws:lambda:us-east-1:${self:custom.accountId}:function:serverless-graphql-appsync-es-production-graphql"
+          lambdaFunctionArn: "arn:aws:lambda:us-west-2:${self:custom.accountId}:function:serverless-graphql-appsync-es-production-graphql"
           serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/Lambda-${self:custom.appSync.serviceRole}"
-
+  
 functions:
   graphql:
     handler: handler.graphqlHandler
@@ -220,7 +201,7 @@ resources:
                   Action:
                     - "es:*"
                   Resource:
-                    - "arn:aws:es:us-east-1:*:domain/appsync/*"
+                    - "arn:aws:es:us-west-2:*:domain/appsync/*"
     AppSyncDynamoDBServiceRole:
       Type: "AWS::IAM::Role"
       Properties:
@@ -252,8 +233,8 @@ resources:
                     - "dynamodb:Scan"
                     - "dynamodb:UpdateItem"
                   Resource:
-                    - "arn:aws:dynamodb:us-east-1:*:table/ESUsers"
-                    - "arn:aws:dynamodb:us-east-1:*:table/ESUsers/*"
+                    - "arn:aws:dynamodb:us-west-2:*:table/ESUsers"
+                    - "arn:aws:dynamodb:us-west-2:*:table/ESUsers/*"
     AppSyncLambdaServiceRole:
       Type: "AWS::IAM::Role"
       Properties:
@@ -279,5 +260,5 @@ resources:
                   Action:
                     - "lambda:invokeFunction"
                   Resource:
-                    - "arn:aws:lambda:us-east-1:${self:custom.accountId}:function:myBoiler"
-                    - "arn:aws:lambda:us-east-1:${self:custom.accountId}:function:myBoiler:*"
+                    - "arn:aws:lambda:us-west-2:${self:custom.accountId}:function:myBoiler"
+                    - "arn:aws:lambda:us-west-2:${self:custom.accountId}:function:myBoiler:*"

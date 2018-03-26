@@ -124,10 +124,10 @@ type User {
 	friends_count: Int!
 	favourites_count: Int!
 	following: [String!]!
-	topTweet: Tweet
 	ride_ask(limit: Int!, nextToken: String): RideAskConnection
     ride_offer(limit: Int!, nextToken: String): RideOfferConnection
-    location(limit: Int!, nextToken: String): LocationConnection
+	locations: String
+
 
 	# search functionality is available in elasticsearch integration
     searchAllRideAsksByKeyword(keyword: String!): RideAskConnection

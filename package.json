@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "serverless-appsync-plugin": "^0.0.6"
+    "serverless-appsync-plugin": "^0.0.6",
+    "serverless-dynamodb-local": "^0.2.28",
+    "serverless-offline": "^3.18.0",
+    "serverless-webpack": "^5.1.1"
   }
 }
