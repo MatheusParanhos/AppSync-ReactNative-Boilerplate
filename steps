@@ -7,14 +7,16 @@
     -init awsmobile 
     
 -create AppSync API
-    -create a data source - dynamo table - user pools ok
-    -create serverless.yml
-    -install packages
-    -attach Schema  - 
-    -attach data source
-    -create resolvers
-    -attach resolvers
+    -create a data source - dynamo table - user pools - elasticSearch ok
+    -create serverless.yml - ok
+    -install packages   -   ok
+    -attach Schema  -  made with serverless
+    -attach data source   -     made with serverless
+    -create resolvers   -   made with serverless
+    -attach resolvers   -   made with serverless
 -install client packages
+
+Details:
 
 The app will fetch data from the database
 such as attractions, restaurants and pubs. 
@@ -62,3 +64,26 @@ a location consists of
 -location_id
 -favorited
 -favorite_count
+
+
+-Succesfully deployed this API on AppSync
+-Error while testing out ElasticSearch: 
+{
+  "data": null,
+  "errors": [
+    {
+      "path": [
+        "createRideAsk"
+      ],
+      "errorType": "Unauthorized",
+      "locations": [
+        {
+          "line": 32,
+          "column": 3
+        }
+      ],
+      "message": "Unable to assume role arn:aws:iam::321318863862:role/ElasticSearch-AppSyncServiceRole."
+    }
+  ]
+}
+
